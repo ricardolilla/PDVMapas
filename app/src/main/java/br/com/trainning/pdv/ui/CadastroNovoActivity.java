@@ -5,11 +5,26 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import br.com.trainning.pdv.R;
+import butterknife.Bind;
 
-public class CadastroNovoActivity extends AppCompatActivity {
+//Trocamos extends AppCompatActivity por BaseAcitivity para usar o ButterKnife
+public class CadastroNovoActivity extends BaseActivity {
+
+    //Declaracao para usar ButterKnife. Faz a função do FindViewbyId
+    @Bind(R.id.editTextDescricao)
+    EditText editTextDescricao;
+    @Bind(R.id.editTextUnidade)
+    EditText editTextUnidade;
+    @Bind(R.id.editTextPreco)
+    EditText editTextPreco;
+    @Bind(R.id.editTextCodigo)
+    EditText editTextCodigo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +33,16 @@ public class CadastroNovoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Log.d("Cadastro",editTextDescricao.getText().toString());
+                Log.d("Cadastro",editTextUnidade.getText().toString());
+                Log.d("Cadastro",editTextPreco.getText().toString());
+                Log.d("Cadastro",editTextCodigo.getText().toString());
             }
         });
     }
