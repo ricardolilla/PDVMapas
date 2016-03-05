@@ -1,13 +1,17 @@
-package br.com.trainning.pdv;
+package br.com.trainning.pdv.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import br.com.trainning.pdv.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,8 +47,14 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_novo) {
+            Intent intent = new Intent(MainActivity.this,CadastroNovoActivity.class);
+            startActivity(intent);
+
+        }else if(id == R.id.action_edit){
+            Log.d("MainActivity","Selecionou editar produto");
             return true;
+
         }
 
         return super.onOptionsItemSelected(item);
