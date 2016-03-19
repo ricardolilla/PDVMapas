@@ -28,11 +28,15 @@ import br.com.trainning.pdv.domain.adapter.CustomArrayAdapter;
 import br.com.trainning.pdv.domain.model.Item;
 import br.com.trainning.pdv.domain.model.ItemProduto;
 import br.com.trainning.pdv.domain.model.Produto;
+import br.com.trainning.pdv.domain.network.APIClient;
 import br.com.trainning.pdv.domain.util.Util;
 import butterknife.Bind;
 import jim.h.common.android.lib.zxing.config.ZXingLibConfig;
 import jim.h.common.android.lib.zxing.integrator.IntentIntegrator;
 import jim.h.common.android.lib.zxing.integrator.IntentResult;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import se.emilsjolander.sprinkles.CursorList;
 import se.emilsjolander.sprinkles.Query;
 
@@ -45,6 +49,9 @@ public class MainActivity extends BaseActivity {
     private double valorTotal;
     private CustomArrayAdapter adapter;
 
+    //Cria chamada de resposta
+    private Callback<List<Produto>> callbackProdutos;
+
 
     @Bind(R.id.listView)
     SwipeMenuListView listView;
@@ -55,6 +62,9 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Configura callback para o retrofit (REST)
+        configureProdutoCallback();
 
         //Codigo de barras
         zxingLibConfig = new ZXingLibConfig();
@@ -175,6 +185,11 @@ public class MainActivity extends BaseActivity {
             Intent telaEditarIntent = new Intent(MainActivity.this,EditarProdutoActivity.class);
             startActivity(telaEditarIntent);
 
+        }else if(id == R.id.action_sincronia){
+            //Chamada da classe REST para receber todos os produtos
+            new APIClient().getRestService().getAllProdutos(callbackProdutos);
+
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -247,5 +262,32 @@ public class MainActivity extends BaseActivity {
         getSupportActionBar().setTitle("PDV "+ Util.getFormatedCurrency(String.valueOf(valorTotal)));
         adapter = new CustomArrayAdapter(this, R.layout.list_item, list);
         listView.setAdapter(adapter);
+    }
+
+    private void configureProdutoCallback() {
+
+        callbackProdutos = new Callback<List<Produto>>() {
+
+            @Override public void success(List<Produto> resultado, Response response) {
+
+                List<Produto> lp = Query.all(Produto.class).get().asList();
+
+                //Apaga produtos da lista local
+                for(Produto p:lp){
+                    p.delete();
+                }
+                //Varre o resultado JSON recebido do servidor e cria banco local com os mesmos produtos do servidor
+                for(Produto produto:resultado){
+                    produto.setId(0L);
+                    produto.save();
+                }
+
+            }
+
+            @Override public void failure(RetrofitError error) {
+
+                Log.e("RETROFIT", "Error:"+error.getMessage());
+            }
+        };
     }
 }
