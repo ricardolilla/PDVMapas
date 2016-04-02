@@ -4,16 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.com.trainning.pdv.ui.MapaActivity">
 
-    <com.mapbox.mapboxsdk.maps.MapView
+
+    <com.mapbox.mapboxsdk.views.MapView
         android:id="@+id/mapview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        mapbox:access_token="pk.eyJ1IjoiZWxjaW9hYnIiLCJhIjoiY2ltajQ2Z2t5MDBrY3V5a3VzY2p4anZ5ZiJ9.XaDTG9fCsHm5QEJ5GEtS1g"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        mapbox:access_token="pk.eyJ1IjoiZWxjaW9hYnIiLCJhIjoiY2loeHBqYXNmMDNianQzbTF2M3YyeGcyaiJ9.A1v3YjikXm14D9U4LlPKEQ"
+        />
 
 </RelativeLayout>
