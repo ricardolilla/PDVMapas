@@ -16,6 +16,7 @@ import br.com.trainning.pdv.R;
 import br.com.trainning.pdv.domain.model.Produto;
 import br.com.trainning.pdv.domain.util.Util;
 import butterknife.Bind;
+import butterknife.OnClick;
 import se.emilsjolander.sprinkles.CursorList;
 import se.emilsjolander.sprinkles.Query;
 
@@ -31,6 +32,7 @@ public class MapaActivity extends BaseActivity {
 
 
         mapView.setStyleUrl(Style.MAPBOX_STREETS);
+        //mapView.setStyleUrl(Style.SATELLITE);
         mapView.setCenterCoordinate(new LatLng(-23.5586729,-46.6612236));
         mapView.setZoomLevel(12);
 
@@ -51,6 +53,16 @@ public class MapaActivity extends BaseActivity {
         }
 
         mapView.onCreate(savedInstanceState);
+    }
+
+    @OnClick(R.id.butruas)
+    public void onclickRuas(){
+        mapView.setStyleUrl(Style.MAPBOX_STREETS);
+    }
+
+    @OnClick(R.id.butsatelite)
+    public void onclickSatelite(){
+        mapView.setStyleUrl(Style.SATELLITE);
     }
 
     @Override
