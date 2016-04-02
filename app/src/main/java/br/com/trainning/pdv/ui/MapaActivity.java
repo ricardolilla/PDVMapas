@@ -39,13 +39,15 @@ public class MapaActivity extends BaseActivity {
         List<Produto> listaProdutos = cursorList.asList();
 
 
-
+        //Colocar marcadores no mapa onde foram cadastrados os produtos
         for(Produto produto : listaProdutos) {
-            Log.d("PRODUTO", produto.toString());
-            mapView.addMarker(new MarkerOptions()
-                    .position(new LatLng(produto.getLatitude(), produto.getLongitude()))
-                    .title(produto.getDescricao())
-                    .snippet(Util.getCurrencyValue(produto.getPreco()) + " " + produto.getUnidade()));
+            if(produto.getLatitude()+produto.getLongitude() != 0.0){
+                Log.d("PRODUTO", produto.getLatitude() + " " + produto.getLongitude());
+                mapView.addMarker(new MarkerOptions()
+                        .position(new LatLng(produto.getLatitude(), produto.getLongitude()))
+                        .title(produto.getDescricao())
+                        .snippet(Util.getCurrencyValue(produto.getPreco()) + " " + produto.getUnidade()));
+            }
         }
 
         mapView.onCreate(savedInstanceState);
